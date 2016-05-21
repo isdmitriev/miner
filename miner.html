@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Game.js"></script>
+    <script type="text/javascript">
+        window.onload = function ()
+        {
+            
+            function createGame(a,b,c)
+            {
+
+                function handler()
+                {
+                var id = this.getAttribute("id");
+               
+
+
+               gameObject.openCell(id);
+
+                  }
+
+             var gameObject = new gameAreaHelper(a, b, "table");
+
+              gameObject.createarea();
+
+            gameObject.createBombs(c);
+
+                setHandlers();
+
+                function setHandlers()
+                {
+                    var tds = document.getElementsByTagName("td");
+                    for (i = 0; i < tds.length; i++)
+                    {
+                        if (tds[i].getAttribute("class") != "ilya")
+                        {
+                            tds[i].onclick = handler;
+                        }
+
+                    }
+
+                     var res = document.getElementById("reset");
+                    res.onclick = function ()
+                    {
+                        gameObject.resetGame();
+                        setHandlers();
+
+                    }
+                }
+
+                var cl = document.getElementById("clear");
+                cl.onclick = function ()
+                {
+                    gameObject.clearGame();
+                 
+                    var rowscount = parameters.elements[0].value;
+                    var cellscount = parameters.elements[1].value;
+                    var bombscount = parameters.elements[2].value;
+
+                    var bombsC = (rowscount * cellscount) - 2;
+
+                    if ((rowscount > 0 && rowscount < 10) && (cellscount > 0 && cellscount < 10) && (bombscount > 0 && bombscount <= bombsC))
+                    {
+                        createGame(rowscount, cellscount, bombscount);
+                    }
+                    else
+                    {
+
+                        alert("error input");
+                    }
+                  
+                }
+            }
+            alert("Start Game");
+            createGame(5, 5, 6);
+          
+        }
+
+         </script>
+</head>
+<body>
+   
+    <div id="table">
+
+    </div>
+    <div style="float:left">
+        <fieldset>
+            <legend>
+                statysGame
+            </legend>
+            <table>
+                <tr>
+                    <td class="ilya" >
+                        OpenCellsCount:
+                    </td>
+                    <td id="cellscount" class="ilya">
+                        0
+                    </td>
+                </tr>
+                <tr>
+                    <td class="ilya">
+                        TotalCountCells:
+                    </td>
+                    <td id="totalcount" class="ilya">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td class="ilya">
+                        <p id="reset">ResetGame</p>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>
+                newGame
+            </legend>
+            <form name="parameters">
+                <table>
+                    <tr>
+                        <td>
+                            input rows count
+                        </td>
+                        <td class="ilya">
+                            <input type="text"  />
+                        </td>
+                    </tr>
+                    <tr>
+                      <tr>
+                          <td>
+                              input cells count
+                          </td>
+                          <td class="ilya">
+                              <input  type="text" />
+                          </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            bombsCount
+                        </td>
+                        <td class="ilya">
+                            <input type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ilya">
+                          <input type="button" id="clear"  value="new game"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </fieldset>
+    </div>
+</body>
+</html>
